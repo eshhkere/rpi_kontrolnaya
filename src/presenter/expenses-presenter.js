@@ -36,13 +36,17 @@ export default class ExpensesPresenter {
         this.#renderExpenses();
       });
     }
+
+    updateExpense(id, updates) {
+        this.#expensesModel.updateExpense(id, updates);
+        this.#renderExpenses();
+    }
   
     #renderExpenses() {
       const container = this.#expenseListComponent.element;
       container.innerHTML = '';
       let expenses = this.#expensesModel.getExpenses();
       
-      // Фильтр по категории
       if (this.#currentCategoryFilter !== 'all') {
         expenses = expenses.filter(e => e.category === this.#currentCategoryFilter);
       }
@@ -50,7 +54,8 @@ export default class ExpensesPresenter {
       expenses.forEach(expense => {
         const expenseComponent = new ExpenseItemComponent({
           expense,
-          onDelete: this.deleteExpense.bind(this)
+          onDelete: this.deleteExpense.bind(this),
+          onUpdate: this.updateExpense.bind(this)
         });
         render(expenseComponent, container);
       });

@@ -22,4 +22,12 @@ export default class ExpensesModel {
   deleteExpense(id) {
     this.#expenses = this.#expenses.filter(expense => expense.id !== id);
   }
+  
+  updateExpense(id, updates) {
+    const expense = this.#expenses.find(e => e.id === id);
+    if (expense) {
+      Object.assign(expense, updates);
+    }
+  }
+  
 }
