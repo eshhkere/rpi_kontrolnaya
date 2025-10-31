@@ -17,11 +17,26 @@ export default class ExpensesPresenter {
     this.#renderExpenses();
   }
 
+  addExpense(name, amount, category) {
+    this.#expensesModel.addExpense(name, amount, category);
+    this.#renderExpenses();
+  }
+
+  deleteExpense(id) {
+    this.#expensesModel.deleteExpense(id);
+    this.#renderExpenses();
+  }
+
   #renderExpenses() {
+    const container = this.#expenseListComponent.element;
+    container.innerHTML = ''; 
     const expenses = this.#expensesModel.getExpenses();
     expenses.forEach(expense => {
-      const expenseComponent = new ExpenseItemComponent({expense});
-      render(expenseComponent, this.#expenseListComponent.element);
+      const expenseComponent = new ExpenseItemComponent({
+        expense,
+        onDelete: this.deleteExpense.bind(this)
+      });
+      render(expenseComponent, container);
     });
   }
 }
