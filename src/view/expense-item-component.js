@@ -6,23 +6,19 @@ function createExpenseItemTemplate(expense) {
 }
 
 export default class ExpenseItemComponent extends AbstractComponent {
-  constructor({expense, onDelete}) {
-    super();
-    this.expense = expense;
-    this.onDelete = onDelete;
-    this.#addDeleteHandler();
-  }
-
-  get template() {
-    return createExpenseItemTemplate(this.expense);
-  }
-
-  #addDeleteHandler() {
-    this.element.addEventListener('click', (event) => {
-      if (event.target.classList.contains('delete-btn')) {
-        this.onDelete(this.expense.id);
-      }
-    });
-  }
+    constructor({expense, onDelete}) {
+      super();
+      this.expense = expense;
+      this.onDelete = onDelete;
+      this.element.addEventListener('click', (event) => {
+        if (event.target.classList.contains('delete-btn')) {
+          this.onDelete(this.expense.id);
+        }
+      });
+    }
+  
+    get template() {
+      return createExpenseItemTemplate(this.expense);
+    }
 }
 
